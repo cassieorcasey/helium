@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="id" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#F5F5F7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111113" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="Helium — pemutar audio lokal bergaya iPod. Tanpa login, tanpa iklan, tanpa umpan algoritmik.">
+  <title>Helium</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='14' fill='%23EBEBEF'/%3E%3Ccircle cx='32' cy='38' r='14' fill='none' stroke='%230071E3' stroke-width='5'/%3E%3Ccircle cx='32' cy='38' r='4' fill='%230071E3'/%3E%3Crect x='14' y='10' width='36' height='10' rx='3' fill='%231D1D1F'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/helium.css">
+</head>
+<body>
+  <!-- Icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.6v12.8c0 .8.9 1.3 1.6.8l10-6.4c.6-.4.6-1.3 0-1.7l-10-6.3C8.9 4.3 8 4.8 8 5.6Z" fill="currentColor"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></symbol>
+      <symbol id="i-prev" viewBox="0 0 24 24"><rect x="4" y="6" width="2.4" height="12" rx="1" fill="currentColor"/><path d="M19 6.9v10.2c0 .8-.9 1.2-1.5.8l-8-5.1a1 1 0 0 1 0-1.6l8-5.1c.6-.4 1.5 0 1.5.8Z" fill="currentColor"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><rect x="17.6" y="6" width="2.4" height="12" rx="1" fill="currentColor"/><path d="M5 6.9v10.2c0 .8.9 1.2 1.5.8l8-5.1a1 1 0 0 0 0-1.6l-8-5.1C5.9 5.7 5 6.1 5 6.9Z" fill="currentColor"/></symbol>
+      <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3.5c1.6 0 3 .8 3.9 2.1l3.2 5.8c.9 1.3 2.3 2.1 3.9 2.1H20M3 17h3.5c1.3 0 2.5-.5 3.3-1.4M13.2 8.4c.8-.9 2-1.4 3.3-1.4H20M17.5 4.5 20 7l-2.5 2.5M17.5 14.5 20 17l-2.5 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 11V9.5A3.5 3.5 0 0 1 7.5 6H19M16.5 3.5 19 6l-2.5 2.5M20 13v1.5a3.5 3.5 0 0 1-3.5 3.5H5M7.5 20.5 5 18l2.5-2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9.5 5.5 6.5 6.5-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m5.5 9.5 6.5 6.5 6.5-6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 3.5v2.2M12 18.3v2.2M20.5 12h-2.2M5.7 12H3.5M18 6l-1.6 1.6M7.6 16.4 6 18M18 18l-1.6-1.6M7.6 7.6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h3.6l2 2h7.4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2v-9Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+      <symbol id="i-note" viewBox="0 0 24 24"><path d="M9 17.5V6.2l10-2v11.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="6.8" cy="17.5" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16.8" cy="15.5" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+      <symbol id="i-album" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="1" fill="currentColor"/></symbol>
+      <symbol id="i-artist" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4.5 20c.9-3.6 3.9-5.5 7.5-5.5s6.6 1.9 7.5 5.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+      <symbol id="i-playlist" viewBox="0 0 24 24"><path d="M4 6.5h11M4 11.5h11M4 16.5h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M17.5 8.5v8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="15.8" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+      <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 20.5c3.6 0 6-2.4 6-5.8 0-3.6-2.6-5.6-3.6-8.9-.2-.6-.9-.7-1.2-.2-.9 1.6-1.1 3-1.1 4-1-.6-1.7-1.7-1.9-2.6-.1-.5-.8-.7-1.1-.2C7.8 8.6 6 11.2 6 14.7c0 3.4 2.4 5.8 6 5.8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+      <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 4.5c.5 3.8 2.7 6 7.5 7.5-4.8 1.5-7 3.7-7.5 7.5-.5-3.8-2.7-6-7.5-7.5 4.8-1.5 7-3.7 7.5-7.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+      <symbol id="i-lyrics" viewBox="0 0 24 24"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 17h-7l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M7.5 9.5h9M7.5 13h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+      <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+      <symbol id="i-queue" viewBox="0 0 24 24"><path d="M4 6.5h16M4 11.5h16M4 16.5h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M17 15v4.5l3.5-2.25L17 15Z" fill="currentColor"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-scan" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    </defs>
+  </svg>
+
+  <div class="app" id="app" data-screen="menu" data-has-track="false">
+    <!-- ============================================================ Sidebar / root menu -->
+    <aside class="sidebar" id="sidebar" aria-label="Library">
+      <div class="sidebar-scroll">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"><span class="brand-num">2</span>He</span>
+          <span class="brand-name">Helium</span>
+        </div>
+
+        <div class="section-label" id="search-label">Search</div>
+        <label class="search">
+          <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+          <input id="search" type="search" placeholder="Cari file lokal…" autocomplete="off" spellcheck="false" aria-labelledby="search-label">
+          <kbd class="search-kbd" aria-hidden="true">⌘F</kbd>
+        </label>
+
+        <nav aria-label="Library">
+          <div class="section-label">Library</div>
+          <ul class="nav-list">
+            <li><button class="nav-item" data-view="playlists"><svg class="icon" aria-hidden="true"><use href="#i-playlist"/></svg><span>Playlists</span><span class="nav-count" data-count="playlists"></span><svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></button></li>
+            <li><button class="nav-item" data-view="artists"><svg class="icon" aria-hidden="true"><use href="#i-artist"/></svg><span>Artists</span><span class="nav-count" data-count="artists"></span><svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></button></li>
+            <li><button class="nav-item" data-view="albums"><svg class="icon" aria-hidden="true"><use href="#i-album"/></svg><span>Albums</span><span class="nav-count" data-count="albums"></span><svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></button></li>
+            <li><button class="nav-item" data-view="songs"><svg class="icon" aria-hidden="true"><use href="#i-note"/></svg><span>Songs</span><span class="nav-count" data-count="songs"></span><svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></button></li>
+            <li><button class="nav-item" data-view="folders"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg><span>Local Folders</span><span class="nav-count" data-count="folders"></span><svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></button></li>
+          </ul>
+
+          <div class="section-label">Smart Collections</div>
+          <ul class="nav-list">
+            <li><button class="nav-item" data-view="smart:recent"><svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg><span>Recently Added</span><svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></button></li>
+            <li><button class="nav-item" data-view="smart:heavy"><svg class="icon" aria-hidden="true"><use href="#i-flame"/></svg><span>Heavy Rotation</span><svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></button></li>
+            <li><button class="nav-item" data-view="smart:never"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>Never Played</span><svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></button></li>
+          </ul>
+        </nav>
+      </div>
+
+      <footer class="sidebar-foot">
+        <div class="library-status" id="library-status" aria-live="polite"></div>
+        <div class="sidebar-actions">
+          <button class="btn btn-quiet" id="btn-open-folder"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg><span>Buka Folder</span></button>
+          <button class="icon-btn" id="btn-settings" aria-label="Pengaturan"><svg class="icon" aria-hidden="true"><use href="#i-gear"/></svg></button>
+        </div>
+      </footer>
+    </aside>
+
+    <!-- ============================================================ Stage -->
+    <main class="stage" id="stage">
+      <header class="stage-header">
+        <button class="icon-btn back-btn" id="btn-back" aria-label="Kembali"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg><span class="back-label" id="back-label">Library</span></button>
+        <h1 class="stage-title" id="stage-title">Songs</h1>
+        <div class="stage-header-end">
+          <button class="icon-btn" id="btn-play-view" aria-label="Putar semua"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></button>
+          <button class="icon-btn" id="btn-shuffle-view" aria-label="Acak semua"><svg class="icon" aria-hidden="true"><use href="#i-shuffle"/></svg></button>
+        </div>
+      </header>
+
+      <div class="stage-scroll" id="stage-scroll">
+        <section class="hero" id="hero" hidden aria-label="Now Playing">
+          <button class="hero-art art" id="hero-art" aria-label="Buka Now Playing"><img alt=""></button>
+          <div class="hero-text">
+            <div class="eyebrow">Now Playing</div>
+            <div class="hero-title" id="hero-title"></div>
+            <div class="hero-sub" id="hero-sub"></div>
+            <div class="hero-format meta-num" id="hero-format"></div>
+          </div>
+        </section>
+
+        <div class="view" id="view" aria-live="off"></div>
+
+        <section class="empty" id="empty" hidden>
+          <span class="brand-mark brand-mark-lg" aria-hidden="true"><span class="brand-num">2</span>He</span>
+          <h2>Koleksi audiomu, tanpa distraksi.</h2>
+          <p>Helium memutar file dari perangkatmu sendiri — FLAC, ALAC, WAV, MP3, AAC, OGG. Tanpa login, tanpa iklan, tanpa data yang keluar.</p>
+          <div class="empty-actions">
+            <button class="btn btn-primary" id="btn-empty-folder"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg>Pilih Folder Musik</button>
+            <button class="btn btn-quiet" id="btn-empty-files">Pilih File</button>
+          </div>
+          <p class="empty-hint">Atau seret folder ke jendela ini.</p>
+          <button class="btn btn-quiet" id="btn-reconnect" hidden><svg class="icon" aria-hidden="true"><use href="#i-scan"/></svg><span></span></button>
+        </section>
+      </div>
+    </main>
+
+    <!-- ============================================================ Liquid Glass mini player -->
+    <div class="glass-bar liquid-glass-surface" id="glass-bar" role="region" aria-label="Kontrol pemutar">
+      <button class="bar-open" id="bar-open" aria-label="Buka Now Playing">
+        <span class="bar-art art"><img alt=""></span>
+        <span class="bar-text">
+          <span class="bar-title" id="bar-title"></span>
+          <span class="bar-sub" id="bar-sub"></span>
+        </span>
+      </button>
+      <div class="bar-controls">
+        <button class="icon-btn" data-act="prev" aria-label="Trek sebelumnya"><svg class="icon" aria-hidden="true"><use href="#i-prev"/></svg></button>
+        <button class="icon-btn icon-btn-primary" data-act="toggle" aria-label="Putar"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></button>
+        <button class="icon-btn" data-act="next" aria-label="Trek berikutnya"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg></button>
+      </div>
+      <div class="bar-time meta-num" id="bar-time">00:00 / 00:00</div>
+      <label class="bar-volume" title="Volume">
+        <svg class="icon" aria-hidden="true"><use href="#i-volume"/></svg>
+        <input type="range" class="range" id="bar-volume" min="0" max="1" step="0.01" aria-label="Volume">
+      </label>
+      <div class="bar-progress" aria-hidden="true"><span id="bar-progress"></span></div>
+    </div>
+
+    <!-- ============================================================ Now Playing sheet -->
+    <div class="np-scrim" id="np-scrim" aria-hidden="true"></div>
+    <section class="np" id="np" role="dialog" aria-modal="true" aria-label="Now Playing" hidden>
+      <div class="np-grabber" aria-hidden="true"></div>
+      <header class="np-header">
+        <button class="icon-btn back-btn" id="np-close" aria-label="Tutup Now Playing"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg><span class="back-label">Library</span></button>
+        <div class="np-header-title">Now Playing</div>
+        <button class="icon-btn" id="np-queue-btn" aria-label="Antrean berikutnya" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      </header>
+
+      <div class="np-body">
+        <div class="np-card" id="np-card">
+          <div class="np-card-inner" id="np-card-inner">
+            <div class="np-face np-front art" id="np-art"><img alt=""></div>
+            <div class="np-face np-back" id="np-lyrics" aria-label="Lirik">
+              <ol class="lyrics" id="lyrics-list"></ol>
+              <div class="lyrics-empty" id="lyrics-empty">Tidak ada lirik untuk trek ini.<br><span>Letakkan file <code>.lrc</code> bernama sama di folder lagu.</span></div>
+            </div>
+          </div>
+          <div class="np-queue" id="np-queue" hidden>
+            <div class="np-queue-head"><span>Up Next</span><span class="meta-num" id="np-queue-count"></span></div>
+            <ol class="np-queue-list" id="np-queue-list"></ol>
+          </div>
+        </div>
+
+        <div class="np-meta">
+          <div class="np-text">
+            <div class="np-title" id="np-title"></div>
+            <div class="np-sub" id="np-sub"></div>
+          </div>
+          <div class="np-toggles">
+            <button class="icon-btn icon-btn-sm" id="np-lyrics-btn" aria-label="Lirik (L)" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-lyrics"/></svg></button>
+            <button class="icon-btn icon-btn-sm" id="np-repeat-btn" aria-label="Ulangi: mati" data-repeat="off"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg><span class="repeat-one" aria-hidden="true">1</span></button>
+          </div>
+        </div>
+
+        <div class="scrubber">
+          <input type="range" class="range range-scrub" id="np-seek" min="0" max="1" step="0.1" value="0" aria-label="Posisi lagu">
+          <div class="scrubber-times meta-num">
+            <span id="np-elapsed">00:00</span>
+            <span class="np-format" id="np-format"></span>
+            <span id="np-remaining">-00:00</span>
+          </div>
+        </div>
+
+        <div class="wheel-wrap">
+          <div class="wheel-modes" role="radiogroup" aria-label="Fungsi cincin">
+            <button role="radio" aria-checked="true" data-mode="scrub">Scrub</button>
+            <button role="radio" aria-checked="false" data-mode="volume">Volume</button>
+          </div>
+          <div class="wheel" id="wheel">
+            <div class="wheel-surface" id="wheel-surface" role="slider" tabindex="0" aria-label="Cincin putar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <span class="wheel-indicator" id="wheel-indicator" aria-hidden="true"></span>
+            <button class="wheel-btn wheel-menu" data-act="menu" aria-label="Menu">MENU</button>
+            <button class="wheel-btn wheel-prev" data-act="prev" aria-label="Trek sebelumnya"><svg class="icon" aria-hidden="true"><use href="#i-prev"/></svg></button>
+            <button class="wheel-btn wheel-next" data-act="next" aria-label="Trek berikutnya"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg></button>
+            <button class="wheel-btn wheel-shuffle" data-act="shuffle" aria-label="Acak" aria-pressed="false">SHUFFLE</button>
+            <button class="wheel-center" data-act="toggle" aria-label="Putar"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></button>
+            <div class="wheel-hud meta-num" id="wheel-hud" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="drop-overlay" id="drop-overlay" aria-hidden="true"><div>Lepaskan untuk menambahkan ke Helium</div></div>
+  </div>
+
+  <!-- ============================================================ Settings -->
+  <dialog class="sheet-dialog" id="settings" aria-labelledby="settings-title">
+    <form method="dialog" class="settings">
+      <header class="settings-head">
+        <h2 id="settings-title">Pengaturan</h2>
+        <button class="icon-btn" value="close" aria-label="Tutup"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </header>
+
+      <div class="settings-group">
+        <div class="settings-label">Tampilan</div>
+        <div class="segmented" role="radiogroup" aria-label="Tema">
+          <label><input type="radio" name="theme" value="auto"><span>Otomatis</span></label>
+          <label><input type="radio" name="theme" value="light"><span>Terang</span></label>
+          <label><input type="radio" name="theme" value="dark"><span>Gelap</span></label>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-label">Taktilitas</div>
+        <label class="switch-row"><span>Haptik detent<small>Getaran ringan setiap 15° putaran cincin</small></span><input type="checkbox" class="switch" name="haptics"></label>
+        <label class="switch-row"><span>Suara klik mekanis<small>Klik halus saat cincin diputar</small></span><input type="checkbox" class="switch" name="clicks"></label>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-label">Pemutaran</div>
+        <label class="switch-row"><span>Gapless playback<small>Pramuat trek berikutnya dengan dual-buffer</small></span><input type="checkbox" class="switch" name="gapless"></label>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-label">Library</div>
+        <div class="settings-actions">
+          <button type="button" class="btn btn-quiet" id="btn-rescan"><svg class="icon" aria-hidden="true"><use href="#i-scan"/></svg>Pindai Ulang</button>
+          <button type="button" class="btn btn-quiet" id="btn-change-folder"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg>Ganti Folder</button>
+          <button type="button" class="btn btn-quiet btn-danger" id="btn-forget">Lupakan Library</button>
+        </div>
+        <p class="settings-note">Semua indeks, statistik putar, dan cover art disimpan lokal di browser ini.</p>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-label">Pintasan Keyboard</div>
+        <dl class="shortcuts">
+          <dt><kbd>Space</kbd></dt><dd>Play / Pause</dd>
+          <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Mundur / maju 5 detik</dd>
+          <dt><kbd>Shift</kbd> + <kbd>←</kbd> <kbd>→</kbd></dt><dd>Trek sebelumnya / berikutnya</dd>
+          <dt><kbd>↑</kbd> <kbd>↓</kbd></dt><dd>Volume ±5%</dd>
+          <dt><kbd>L</kbd></dt><dd>Tampilkan / sembunyikan lirik</dd>
+          <dt><kbd>⌘/Ctrl</kbd> + <kbd>F</kbd></dt><dd>Cari di library</dd>
+          <dt><kbd>Esc</kbd></dt><dd>Tutup panel</dd>
+        </dl>
+      </div>
+    </form>
+  </dialog>
+
+  <input type="file" id="file-folder" webkitdirectory directory multiple hidden>
+  <input type="file" id="file-files" accept="audio/*,.flac,.m4a,.alac,.opus,.ogg,.lrc,.m3u,.m3u8" multiple hidden>
+
+  <script src="js/metadata.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/lrc.js"></script>
+  <script src="js/library.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/motion.js"></script>
+  <script src="js/wheel.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
