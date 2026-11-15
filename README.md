@@ -1,76 +1,75 @@
 # Helium
 
-Helium itu pemutar musik buat lagu-lagu yang sudah ada di perangkatmu, dengan tampilan yang meminjam gaya iPod lama, roda putarnya juga ikut. Lagu diputar langsung dari folder yang kamu pilih. Kamu tidak perlu bikin akun, dan tidak ada file yang diunggah ke mana pun.
+Helium is a local music player that runs in the browser and borrows its look from the iPod, click wheel included. It reads a folder of audio files from the device, indexes their tags and cover art, and plays them from there. Nothing is uploaded and there is no account.
 
-Ini proyek santai yang ditulis pakai HTML, CSS, dan JavaScript biasa, tanpa build step dan tanpa library. Buka `index.html`, pilih folder musik, lalu putar.
+The code is plain HTML, CSS, and JavaScript with no dependencies and no build step.
 
-## Menjalankan
+## Running it
 
-Buka `index.html` langsung di browser, atau sajikan foldernya:
+Open `index.html` in a browser, or serve the folder:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Lalu buka `http://localhost:8000` dan klik **Pilih Folder Musik**. Kamu juga bisa menyeret folder ke jendela.
+Then load `http://localhost:8000` and pick a music folder. Dropping a folder onto the window works too.
 
-Di Chrome/Edge, Helium memakai File System Access API dan mengingat folder musikmu. Setelah browser dibuka ulang, cukup klik **Hubungkan ulang** sekali. Di Firefox/Safari, folder dipilih ulang setiap sesi, tapi indeks metadata dan cover art tetap di-cache.
+Chrome and Edge use the File System Access API, so the folder is remembered and reconnects with one click after a restart. Firefox and Safari ask for the folder again each session, but the cached index and cover art carry over.
 
-## Fitur
+## Formats
 
-| Area | Detail |
+Helium reads tags from MP3 (ID3v1 and ID3v2.2 to 2.4), FLAC, Ogg Vorbis, Opus, MP4/M4A (AAC and ALAC), and WAV, with its own parser in `js/metadata.js`. It also reads bit depth, sample rate, bitrate, and duration without decoding the audio, which is where labels like `FLAC 24-bit / 96kHz` come from.
+
+Playback depends on the browser's decoders. ALAC only plays in Safari. When a file can't be decoded, the player names the codec in a message and moves on to the next track.
+
+## How it works
+
+Indexing reads only the bytes it needs: tag headers, stream info, and embedded pictures. Results are cached in IndexedDB, keyed by path, size, and modification time, so rescanning an unchanged library is quick. Each album's cover art is stored once. When a file has no embedded picture, a `cover.jpg` or `folder.jpg` in the same folder is used instead.
+
+The library groups tracks by artist, album (with disc numbers), and folder. Any `.m3u` or `.m3u8` file inside the music folder shows up as a playlist. Recently Added, Heavy Rotation, and Never Played are built from play counts kept in localStorage. A play counts once 30 seconds or half the track has been heard, whichever is shorter.
+
+Playback alternates between two `<audio>` elements. While one track plays, the next one loads into the other element and starts on a short timer at the end of the current track. FLAC, WAV, and ALAC join without a gap; MP3 and AAC can keep a few milliseconds of encoder padding.
+
+Lyrics come from a `.lrc` file with the same name as the track, or from lyrics embedded in the file. They sit on the back of the album art in Now Playing. Synced lines highlight and scroll along with playback, and clicking a line seeks to it.
+
+The click wheel seeks one second per 15° detent, further when spun quickly, or changes the volume in volume mode. Each detent can fire a short vibration and a synthesized click, and both can be switched off in Settings. Arrow keys and the mouse wheel drive it as well.
+
+Panels move on a spring (stiffness 380, damping 32, mass 1). When the system asks for reduced motion, the spring is replaced by a 150 ms cross-fade. The Now Playing panel can be dragged down to close on small screens.
+
+Track info and playback controls are exposed to the operating system through the Media Session API, and the last queue and position come back on the next visit.
+
+## Keyboard shortcuts
+
+| Key | Action |
 | --- | --- |
-| Format | FLAC, ALAC, WAV, MP3, AAC/M4A, Ogg Vorbis, Opus. Dukungan pemutaran mengikuti browser: ALAC hanya diputar di Safari. |
-| Metadata | Parser bawaan untuk ID3v2.2–2.4/ID3v1, Vorbis Comments (FLAC/Ogg/Opus), MP4 `ilst` atoms, dan RIFF INFO. Membaca *embedded cover art*, bit depth, sample rate, bitrate, dan durasi tanpa men-decode audio. |
-| Indeks | Hanya byte yang diperlukan yang dibaca. Hasilnya di-cache di IndexedDB berdasarkan path + ukuran + waktu modifikasi, jadi pemindaian ulang hampir instan. Cover art di-dedup per album. `cover.jpg`/`folder.jpg` dipakai sebagai cadangan. |
-| Library | Artists, Albums (termasuk multi-disc), Songs, Local Folders, dan Playlists dari file `.m3u`/`.m3u8` di folder musik. |
-| Smart Collections | Recently Added, Heavy Rotation, Never Played, dihitung dari riwayat putar yang disimpan lokal. Satu putaran dihitung setelah 30 detik atau separuh durasi lagu. |
-| Gapless | Dua elemen audio bergantian. Trek berikutnya dipramuat lalu dimulai lewat timer ketat di akhir trek. FLAC/WAV/ALAC tersambung mulus. MP3/AAC bisa menyisakan beberapa milidetik *encoder padding*. |
-| Lirik | File `.lrc` dengan nama sama di folder lagu (atau lirik tertanam) ditampilkan di balik kartu album, dengan *active line highlight*, *smooth auto-scroll*, dan klik baris untuk melompat. |
-| Rotary Scrubber | Putar cincin untuk *scrubbing* per detik (berakselerasi saat diputar cepat) atau mengatur volume. Ada detent setiap 15° dengan haptik (`navigator.vibrate(4)`) dan klik mekanis sintetis. Keduanya bisa dimatikan. Cincin juga bisa dioperasikan dengan keyboard dan *scroll wheel*. |
-| Motion | Pegas yang bisa diinterupsi (stiffness 380, damping 32, mass 1) untuk sheet Now Playing, navigasi mobile, dan flip lirik. Sheet bisa diseret ke bawah untuk ditutup. Saat `prefers-reduced-motion` aktif, animasi berubah jadi *cross-fade* 150 ms. |
-| Sistem | Media Session API (kontrol di lock screen/OS), sesi terakhir dilanjutkan otomatis, tema Otomatis/Terang/Gelap. |
+| `Space` | Play or pause |
+| `←` / `→` | Back or forward 5 seconds |
+| `Shift` + `←` / `→` | Previous or next track |
+| `↑` / `↓` | Volume up or down 5% |
+| `L` | Show or hide lyrics |
+| `⌘/Ctrl` + `F` | Search the library |
+| `Esc` | Close the open panel or go back |
 
-## Ikon & brand
+## Icon
 
-Ikon **The Levitating Orb**: siluet click wheel yang diabstraksi, dengan bola Liquid Glass yang naik 4% di atas bayangan apung. Semua aset ada di `assets/icon/`:
+The app icon is an abstracted click wheel with a glass orb raised slightly above its center. `assets/icon/` holds the light and dark 1024 px masters, a simplified version for 16 to 32 px that follows the system theme, a monochrome version, and PNG exports for the web manifest, the iOS home screen, and favicons. Inside the app the logo is drawn from inline SVG symbols that read `--logo-*` CSS tokens, so it switches with the theme chosen in Settings.
 
-| File | Kegunaan |
-| --- | --- |
-| `helium-icon-light.svg`, `helium-icon-dark.svg` | Master 1024 px, kelima layer lengkap (512–1024 px, About, App Store) |
-| `helium-icon-small.svg` | Versi 16–32 px: cincin + bola tanpa blur, ikut tema sistem (favicon) |
-| `helium-icon-mono.svg` | Varian tinted/monokrom (`currentColor`, opasitas 15/25/90%) |
-| `*-1024.png`, `icon-192/512.png`, `icon-maskable-512.png`, `apple-touch-icon.png`, `favicon-16/32.png` | Ekspor raster untuk PWA, iOS, dan browser lama |
-
-Di dalam aplikasi, logo digambar dari simbol SVG inline yang membaca token CSS `--logo-*`, sehingga ikut berganti saat tema dipilih manual di Pengaturan.
-
-## Pintasan keyboard
-
-| Tombol | Aksi |
-| --- | --- |
-| `Space` | Play / Pause |
-| `←` / `→` | Mundur / maju 5 detik |
-| `Shift` + `←` / `→` | Trek sebelumnya / berikutnya |
-| `↑` / `↓` | Volume ±5% |
-| `L` | Tampilkan / sembunyikan lirik |
-| `⌘/Ctrl` + `F` | Cari di library |
-| `Esc` | Tutup panel / kembali |
-
-## Struktur
+## Layout
 
 ```
-index.html        markup, ikon SVG, logo, dialog pengaturan
-manifest.webmanifest  ikon & metadata PWA
-assets/icon/      aset logo (SVG master, varian kecil & monokrom, PNG)
-css/helium.css    token warna (Light/Dark), Liquid Glass, layout split-pane & compact
-js/metadata.js    pembaca tag & properti stream (tanpa library eksternal)
-js/store.js       IndexedDB (handle, cache metadata, cover art) + localStorage
-js/library.js     pemindaian, indeks, koleksi, smart playlists, statistik putar
-js/engine.js      mesin audio dual-buffer (gapless)
-js/lrc.js         parser .lrc
-js/motion.js      fisika pegas
-js/wheel.js       Virtual Rotary Scrubber
-js/app.js         navigasi, tampilan, antrean, Now Playing, pintasan
+index.html            markup, SVG icons and logo, settings dialog
+manifest.webmanifest  web app manifest
+assets/icon/          icon sources and PNG exports
+css/helium.css        light and dark tokens, glass bar, desktop and compact layouts
+js/metadata.js        tag and stream parser
+js/store.js           IndexedDB (folder handle, metadata cache, cover art) and localStorage
+js/library.js         scanning, indexing, collections, smart playlists, play counts
+js/engine.js          two-element playback engine
+js/lrc.js             .lrc parser
+js/motion.js          spring physics
+js/wheel.js           click wheel input
+js/app.js             navigation, views, queue, Now Playing, shortcuts
+anti-slop/            UI and copy audit with open findings
 ```
 
-Modul `js/metadata.js` juga bisa dipakai di Node (`require('./js/metadata.js').parse(file)`) dengan objek `File`/`Blob`.
+`js/metadata.js` also works in Node: `require('./js/metadata.js').parse(file)` accepts a `File` or `Blob`.
