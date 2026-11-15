@@ -1,8 +1,8 @@
 # Helium
 
-Pemutar audio lokal bergaya iPod, dibangun dengan HTML, CSS, dan JavaScript murni. Desainnya mengikuti spesifikasi **Anodized & Liquid Glass**: bodi *anodized* yang bersih, kaca cair hanya pada kontrol mengambang, dan *Virtual Rotary Scrubber* sebagai interaksi utama.
+Helium itu pemutar musik buat lagu-lagu yang sudah ada di perangkatmu, dengan tampilan yang meminjam gaya iPod lama, roda putarnya juga ikut. Lagu diputar langsung dari folder yang kamu pilih. Kamu tidak perlu bikin akun, dan tidak ada file yang diunggah ke mana pun.
 
-Tidak ada login, iklan, umpan algoritmik, *build step*, atau dependensi. Semua data tetap di perangkatmu.
+Ini proyek santai yang ditulis pakai HTML, CSS, dan JavaScript biasa, tanpa build step dan tanpa library. Buka `index.html`, pilih folder musik, lalu putar.
 
 ## Menjalankan
 
