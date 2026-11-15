@@ -107,6 +107,37 @@
   :root { --target: 44px; --row-h: 56px; --list-font: 15px; }
 }
 
+/* ---------------------------------------------------------------- Brand mark tokens (Levitating Orb) */
+:root {
+  --logo-base-a: #F7F7FA; --logo-base-b: #DDDDE3;
+  --logo-groove-a: #D4D4DC; --logo-groove-b: #EFEFF4;
+  --logo-bevel-out: rgba(0, 0, 0, 0.06); --logo-bevel-in: rgba(255, 255, 255, 0.55);
+  --logo-orb-a: #FFFFFF; --logo-orb-b: #EBF5FF; --logo-orb-c: #B8DCFF;
+  --logo-rim-a: rgba(255, 255, 255, 0.95); --logo-rim-b: rgba(255, 255, 255, 0.2); --logo-rim-c: rgba(0, 113, 227, 0.25);
+  --logo-shadow: rgba(0, 85, 179, 0.18);
+  --logo-sm-base: #ECECF1; --logo-sm-ring: #C3C3CC; --logo-sm-orb: #0071E3;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --logo-base-a: #2A2A2E; --logo-base-b: #121214;
+    --logo-groove-a: #141416; --logo-groove-b: #26262A;
+    --logo-bevel-out: rgba(0, 0, 0, 0.35); --logo-bevel-in: rgba(255, 255, 255, 0.05);
+    --logo-orb-a: #64B5FF; --logo-orb-b: #1D5FA7; --logo-orb-c: #16283D;
+    --logo-rim-a: rgba(255, 255, 255, 0.55); --logo-rim-b: rgba(100, 181, 255, 0.20); --logo-rim-c: rgba(0, 0, 0, 0.40);
+    --logo-shadow: rgba(0, 0, 0, 0.65);
+    --logo-sm-base: #232327; --logo-sm-ring: #4A4A52; --logo-sm-orb: #3898FF;
+  }
+}
+:root[data-theme="dark"] {
+  --logo-base-a: #2A2A2E; --logo-base-b: #121214;
+  --logo-groove-a: #141416; --logo-groove-b: #26262A;
+  --logo-bevel-out: rgba(0, 0, 0, 0.35); --logo-bevel-in: rgba(255, 255, 255, 0.05);
+  --logo-orb-a: #64B5FF; --logo-orb-b: #1D5FA7; --logo-orb-c: #16283D;
+  --logo-rim-a: rgba(255, 255, 255, 0.55); --logo-rim-b: rgba(100, 181, 255, 0.20); --logo-rim-c: rgba(0, 0, 0, 0.40);
+  --logo-shadow: rgba(0, 0, 0, 0.65);
+  --logo-sm-base: #232327; --logo-sm-ring: #4A4A52; --logo-sm-orb: #3898FF;
+}
+
 /* ---------------------------------------------------------------- Base */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -211,24 +242,8 @@ kbd {
 .sidebar-scroll { flex: 1; overflow-y: auto; padding: 18px 12px 12px; }
 .brand { display: flex; align-items: center; gap: 10px; padding: 2px 8px 6px; }
 .brand-name { font-family: var(--font-display); font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
-.brand-mark {
-  position: relative;
-  display: inline-grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  background: var(--bg-wheel);
-  box-shadow: inset 0 1px 0 var(--wheel-sheen), 0 0 0 1px var(--border-hairline);
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 14px;
-  letter-spacing: -0.02em;
-  padding-top: 4px;
-}
-.brand-num { position: absolute; top: 2px; left: 4px; font-size: 7.5px; font-weight: 600; color: var(--ink-tertiary); letter-spacing: 0; }
-.brand-mark-lg { width: 72px; height: 72px; border-radius: 18px; font-size: 32px; padding-top: 8px; }
-.brand-mark-lg .brand-num { top: 6px; left: 9px; font-size: 13px; }
+.brand-mark { width: 30px; height: 30px; flex: none; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.10)); }
+.brand-mark-lg { width: 96px; height: 96px; filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.12)); }
 
 .section-label {
   margin: 18px 10px 6px;
@@ -826,7 +841,7 @@ kbd {
   .sidebar-scroll { padding: calc(14px + env(safe-area-inset-top)) 16px 16px; }
   .brand { padding: 8px 4px 4px; }
   .brand-name { font-size: 28px; font-weight: 700; }
-  .brand-mark { width: 36px; height: 36px; font-size: 16px; }
+  .brand-mark { width: 36px; height: 36px; }
   .search-kbd { display: none; }
   .search input { font-size: 16px; }
   .nav-list { background: var(--bg-elevated); border-radius: 14px; border: 1px solid var(--border-hairline); overflow: hidden; gap: 0; }

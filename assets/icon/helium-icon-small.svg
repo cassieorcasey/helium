@@ -1,0 +1,16 @@
+<svg width="32" height="32" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Helium</title>
+  <style>
+    .base { fill: #ECECF1; }
+    .ring { stroke: #C3C3CC; }
+    .orb  { fill: #0071E3; }
+    @media (prefers-color-scheme: dark) {
+      .base { fill: #232327; }
+      .ring { stroke: #4A4A52; }
+      .orb  { fill: #3898FF; }
+    }
+  </style>
+  <rect class="base" width="1024" height="1024" rx="228"/>
+  <circle class="ring" cx="512" cy="512" r="290" stroke-width="96"/>
+  <circle class="orb" cx="512" cy="472" r="176"/>
+</svg>

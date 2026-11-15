@@ -8,7 +8,10 @@
   <meta name="theme-color" content="#111113" media="(prefers-color-scheme: dark)">
   <meta name="description" content="Helium — pemutar audio lokal bergaya iPod. Tanpa login, tanpa iklan, tanpa umpan algoritmik.">
   <title>Helium</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='4' width='56' height='56' rx='14' fill='%23EBEBEF'/%3E%3Ccircle cx='32' cy='38' r='14' fill='none' stroke='%230071E3' stroke-width='5'/%3E%3Ccircle cx='32' cy='38' r='4' fill='%230071E3'/%3E%3Crect x='14' y='10' width='36' height='10' rx='3' fill='%231D1D1F'/%3E%3C/svg%3E">
+  <link rel="icon" href="assets/icon/helium-icon-small.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icon/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icon/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="css/helium.css">
 </head>
 <body>
@@ -40,6 +43,26 @@
       <symbol id="i-queue" viewBox="0 0 24 24"><path d="M4 6.5h16M4 11.5h16M4 16.5h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M17 15v4.5l3.5-2.25L17 15Z" fill="currentColor"/></symbol>
       <symbol id="i-x" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
       <symbol id="i-scan" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <!-- Brand: The Levitating Orb. Full mark (≥ 48px) and simplified mark (≤ 32px). -->
+      <linearGradient id="logo-base" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--logo-base-a)"/><stop offset="1" style="stop-color:var(--logo-base-b)"/></linearGradient>
+      <linearGradient id="logo-groove" x1="512" y1="182" x2="512" y2="842" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--logo-groove-a)"/><stop offset="1" style="stop-color:var(--logo-groove-b)"/></linearGradient>
+      <radialGradient id="logo-orb" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 418) rotate(90) scale(232)"><stop offset="0" style="stop-color:var(--logo-orb-a)"/><stop offset="0.52" style="stop-color:var(--logo-orb-b)"/><stop offset="1" style="stop-color:var(--logo-orb-c)"/></radialGradient>
+      <linearGradient id="logo-rim" x1="512" y1="304" x2="512" y2="640" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:var(--logo-rim-a)"/><stop offset="0.5" style="stop-color:var(--logo-rim-b)"/><stop offset="1" style="stop-color:var(--logo-rim-c)"/></linearGradient>
+      <filter id="logo-float" x="240" y="290" width="544" height="520" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="28"/></filter>
+      <symbol id="logo" viewBox="0 0 1024 1024">
+        <rect width="1024" height="1024" rx="228" fill="url(#logo-base)"/>
+        <circle cx="512" cy="512" r="298" fill="none" stroke="url(#logo-groove)" stroke-width="64"/>
+        <circle cx="512" cy="512" r="329" fill="none" style="stroke:var(--logo-bevel-out)" stroke-width="2"/>
+        <circle cx="512" cy="512" r="267" fill="none" style="stroke:var(--logo-bevel-in)" stroke-width="2"/>
+        <circle cx="512" cy="543" r="153" style="fill:var(--logo-shadow)" filter="url(#logo-float)"/>
+        <circle cx="512" cy="472" r="168" fill="url(#logo-orb)"/>
+        <circle cx="512" cy="472" r="167" fill="none" stroke="url(#logo-rim)" stroke-width="2.5"/>
+      </symbol>
+      <symbol id="logo-sm" viewBox="0 0 1024 1024">
+        <rect width="1024" height="1024" rx="228" style="fill:var(--logo-sm-base)"/>
+        <circle cx="512" cy="512" r="290" fill="none" style="stroke:var(--logo-sm-ring)" stroke-width="96"/>
+        <circle cx="512" cy="472" r="176" style="fill:var(--logo-sm-orb)"/>
+      </symbol>
     </defs>
   </svg>
 
@@ -48,7 +71,7 @@
     <aside class="sidebar" id="sidebar" aria-label="Library">
       <div class="sidebar-scroll">
         <div class="brand">
-          <span class="brand-mark" aria-hidden="true"><span class="brand-num">2</span>He</span>
+          <svg class="brand-mark" aria-hidden="true"><use href="#logo-sm"/></svg>
           <span class="brand-name">Helium</span>
         </div>
 
@@ -112,7 +135,7 @@
         <div class="view" id="view" aria-live="off"></div>
 
         <section class="empty" id="empty" hidden>
-          <span class="brand-mark brand-mark-lg" aria-hidden="true"><span class="brand-num">2</span>He</span>
+          <svg class="brand-mark brand-mark-lg" aria-hidden="true"><use href="#logo"/></svg>
           <h2>Koleksi audiomu, tanpa distraksi.</h2>
           <p>Helium memutar file dari perangkatmu sendiri — FLAC, ALAC, WAV, MP3, AAC, OGG. Tanpa login, tanpa iklan, tanpa data yang keluar.</p>
           <div class="empty-actions">

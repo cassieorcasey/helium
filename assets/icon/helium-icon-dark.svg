@@ -1,0 +1,48 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Helium</title>
+  <defs>
+    <!-- Anodized space black base -->
+    <linearGradient id="anodizedDark" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2A2A2E"/>
+      <stop offset="100%" stop-color="#121214"/>
+    </linearGradient>
+    <!-- Recessed wheel groove -->
+    <linearGradient id="wheelGrooveDark" x1="512" y1="182" x2="512" y2="842" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#141416"/>
+      <stop offset="100%" stop-color="#26262A"/>
+    </linearGradient>
+    <!-- Liquid glass core, dark refraction -->
+    <radialGradient id="glassOrbDark" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 415) rotate(90) scale(235)">
+      <stop offset="0%" stop-color="#64B5FF"/>
+      <stop offset="50%" stop-color="#1D5FA7"/>
+      <stop offset="100%" stop-color="#16283D"/>
+    </radialGradient>
+    <!-- Specular top rim -->
+    <linearGradient id="rimDark" x1="512" y1="304" x2="512" y2="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#64B5FF" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.40"/>
+    </linearGradient>
+    <!-- Levitation shadow -->
+    <filter id="floatShadowDark" x="240" y="290" width="544" height="520" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+  </defs>
+
+  <!-- Layer 1: Squircle base -->
+  <rect width="1024" height="1024" rx="228" fill="url(#anodizedDark)"/>
+
+  <!-- Layer 2: Abstracted click wheel track with inner bevel -->
+  <circle cx="512" cy="512" r="298" stroke="url(#wheelGrooveDark)" stroke-width="64"/>
+  <circle cx="512" cy="512" r="329" stroke="#000000" stroke-opacity="0.35" stroke-width="2"/>
+  <circle cx="512" cy="512" r="267" stroke="#FFFFFF" stroke-opacity="0.05" stroke-width="2"/>
+
+  <!-- Layer 3: Buoyancy drop shadow -->
+  <circle cx="512" cy="544" r="154" fill="#000000" fill-opacity="0.65" filter="url(#floatShadowDark)"/>
+
+  <!-- Layer 4: Levitating liquid glass orb (raised 4%) -->
+  <circle cx="512" cy="472" r="168" fill="url(#glassOrbDark)"/>
+
+  <!-- Layer 5: Specular glass rim -->
+  <circle cx="512" cy="472" r="167" stroke="url(#rimDark)" stroke-width="2.5"/>
+</svg>

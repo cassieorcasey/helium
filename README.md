@@ -31,6 +31,19 @@ Di Chrome/Edge, Helium memakai File System Access API dan mengingat folder musik
 | Motion | Pegas yang bisa diinterupsi (stiffness 380, damping 32, mass 1) untuk sheet Now Playing, navigasi mobile, dan flip lirik. Sheet bisa diseret ke bawah untuk ditutup. Saat `prefers-reduced-motion` aktif, animasi berubah jadi *cross-fade* 150 ms. |
 | Sistem | Media Session API (kontrol di lock screen/OS), sesi terakhir dilanjutkan otomatis, tema Otomatis/Terang/Gelap. |
 
+## Ikon & brand
+
+Ikon **The Levitating Orb**: siluet click wheel yang diabstraksi, dengan bola Liquid Glass yang naik 4% di atas bayangan apung. Semua aset ada di `assets/icon/`:
+
+| File | Kegunaan |
+| --- | --- |
+| `helium-icon-light.svg`, `helium-icon-dark.svg` | Master 1024 px, kelima layer lengkap (512–1024 px, About, App Store) |
+| `helium-icon-small.svg` | Versi 16–32 px: cincin + bola tanpa blur, ikut tema sistem (favicon) |
+| `helium-icon-mono.svg` | Varian tinted/monokrom (`currentColor`, opasitas 15/25/90%) |
+| `*-1024.png`, `icon-192/512.png`, `icon-maskable-512.png`, `apple-touch-icon.png`, `favicon-16/32.png` | Ekspor raster untuk PWA, iOS, dan browser lama |
+
+Di dalam aplikasi, logo digambar dari simbol SVG inline yang membaca token CSS `--logo-*`, sehingga ikut berganti saat tema dipilih manual di Pengaturan.
+
 ## Pintasan keyboard
 
 | Tombol | Aksi |
@@ -46,7 +59,9 @@ Di Chrome/Edge, Helium memakai File System Access API dan mengingat folder musik
 ## Struktur
 
 ```
-index.html        markup, ikon SVG, dialog pengaturan
+index.html        markup, ikon SVG, logo, dialog pengaturan
+manifest.webmanifest  ikon & metadata PWA
+assets/icon/      aset logo (SVG master, varian kecil & monokrom, PNG)
 css/helium.css    token warna (Light/Dark), Liquid Glass, layout split-pane & compact
 js/metadata.js    pembaca tag & properti stream (tanpa library eksternal)
 js/store.js       IndexedDB (handle, cache metadata, cover art) + localStorage
