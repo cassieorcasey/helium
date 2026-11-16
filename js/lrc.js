@@ -1,4 +1,4 @@
-/* Helium — .lrc parser. Supports multiple timestamps per line and the [offset:] tag. */
+/* Helium: .lrc parser. Supports multiple timestamps per line and the [offset:] tag. */
 (function (H) {
   'use strict';
 

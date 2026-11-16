@@ -1,4 +1,4 @@
-/* Helium — interruptible spring physics (stiffness 380, damping 32, mass 1 by default). */
+/* Helium: interruptible spring physics (stiffness 380, damping 32, mass 1 by default). */
 (function (H) {
   'use strict';
 

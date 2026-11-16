@@ -1,4 +1,4 @@
-/* Helium — local persistence: IndexedDB for handles, metadata cache and artwork; localStorage for prefs & stats. */
+/* Helium: local persistence: IndexedDB for handles, metadata cache and artwork; localStorage for prefs & stats. */
 (function (H) {
   'use strict';
 

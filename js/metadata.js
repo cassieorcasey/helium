@@ -1,5 +1,5 @@
 /*
- * Helium — metadata reader.
+ * Helium: metadata reader.
  * Reads tags, embedded cover art and stream properties straight from local
  * files, without external libraries. Supported containers:
  *   ID3v2.2/2.3/2.4 (+ID3v1) · MPEG audio (MP3) · ADTS AAC · FLAC (Vorbis comments, PICTURE)

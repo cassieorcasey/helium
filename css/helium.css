@@ -1,5 +1,5 @@
 /* =====================================================================
-   Helium — Anodized & Liquid Glass
+   Helium: Anodized & Liquid Glass
    ===================================================================== */
 
 /* ---------------------------------------------------------------- Tokens */
@@ -824,7 +824,7 @@ kbd {
 .shortcuts dd { margin: 0; color: var(--ink-secondary); }
 
 /* =====================================================================
-   Compact viewport — one-handed stage
+   Compact viewport, one-handed stage
    ===================================================================== */
 @media (max-width: 760px) {
   :root { --target: 44px; --row-h: 56px; --list-font: 15px; }

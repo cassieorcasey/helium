@@ -1,4 +1,4 @@
-/* Helium — local library: scanning, indexing (with cache), collections, smart playlists and play statistics. */
+/* Helium: local library: scanning, indexing (with cache), collections, smart playlists and play statistics. */
 (function (H) {
   'use strict';
 

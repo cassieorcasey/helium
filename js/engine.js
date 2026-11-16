@@ -1,5 +1,5 @@
 /*
- * Helium — audio engine with dual-buffer preloading.
+ * Helium: audio engine with dual-buffer preloading.
  * Two <audio> elements alternate: while one plays, the next track is decoded into the standby
  * element. As the current track reaches its end, the standby starts on a tight timer so the hand-off
  * happens without the silence of a fresh load. (Encoder padding inside MP3/AAC files can still leave

@@ -1,4 +1,4 @@
-/* Helium — application shell: navigation, views, queue, Now Playing, lyrics, shortcuts. */
+/* Helium: application shell: navigation, views, queue, Now Playing, lyrics, shortcuts. */
 (function (H) {
   'use strict';
 
@@ -213,7 +213,7 @@
       el('span', { class: 'eq', 'aria-hidden': 'true' }, el('i'), el('i'), el('i')),
       el('span', { class: 'row-main' },
         el('span', { class: 'row-title', text: t.title }),
-        el('span', { class: 'row-sub', text: thumb ? `${t.artist} — ${t.album}` : t.artist })
+        el('span', { class: 'row-sub', text: thumb ? `${t.artist} · ${t.album}` : t.artist })
       ),
       el('span', { class: 'row-end', text: t.duration ? fmt(t.duration) : '' })
     );
@@ -539,7 +539,7 @@
     state.counted = false;
     app.dataset.hasTrack = 'true';
 
-    const sub = `${track.artist} — ${track.album}`;
+    const sub = `${track.artist} · ${track.album}`;
     $('#bar-title').textContent = track.title;
     $('#bar-sub').textContent = sub;
     $('#np-title').textContent = track.title;
@@ -548,7 +548,7 @@
     for (const box of [$('.bar-art'), $('#np-art'), $('#hero-art')]) setArt(box, track);
     updateHero();
     $$('.row-btn[data-id]').forEach((b) => (b.dataset.id === track.id ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
-    document.title = `${track.title} — ${track.artist} · Helium`;
+    document.title = `${track.title} · ${track.artist} · Helium`;
 
     loadLyrics(track);
     updateMediaSession(track);
@@ -564,7 +564,7 @@
     $('#hero').hidden = !t || !lib.tracks.length || v.type === 'album';
     if (!t) return;
     $('#hero-title').textContent = t.title;
-    $('#hero-sub').textContent = `${t.artist} — ${t.album}`;
+    $('#hero-sub').textContent = `${t.artist} · ${t.album}`;
     $('#hero-format').textContent = [t.format, t.year].filter(Boolean).join(' · ');
   }
 

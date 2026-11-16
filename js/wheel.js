@@ -1,5 +1,5 @@
 /*
- * Helium — Virtual Rotary Scrubber.
+ * Helium: Virtual Rotary Scrubber.
  * Circular drag on the ring emits a detent every 15°, with haptics (navigator.vibrate) and an optional
  * synthesized mechanical click. Taps on the ring labels act as buttons; the ring surface is also a
  * keyboard-operable slider so the gesture is never the only way in.
